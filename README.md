@@ -12,3 +12,8 @@ required Python>=3.10 and PyTorch>=2.1
 
 ## Dataset
 The dataset can be find here [DeepShip](https://github.com/irfankamboh/DeepShip) and [ShipsEar](https://github.com/stef729/ShipsEar)
+
+## Model parameter test
+```python
+python UATR-Triba.py
+```

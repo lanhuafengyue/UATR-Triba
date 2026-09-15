@@ -10,7 +10,7 @@ import scan2d
 MODALITIES: Tuple[str, ...] = ("cqt", "logmel", "stft")
 
 class ChannelAttention(nn.Module):
-    """CBAM channel attention using shared average/max-pool projections."""
+    """channel attention using shared average/max-pool projections."""
 
     def __init__(self, channels: int, reduction: int = 8):
         super().__init__()
@@ -28,7 +28,7 @@ class ChannelAttention(nn.Module):
 
 
 class SpatialAttention(nn.Module):
-    """CBAM spatial attention from channel-wise average and maximum maps."""
+    """spatial attention from channel-wise average and maximum maps."""
 
     def __init__(self, kernel_size: int = 7):
         super().__init__()
@@ -67,13 +67,6 @@ class ResidualCBAM(nn.Module):
 
 
 class UATRTriba(nn.Module):
-    """
-    Three VMamba encoders -> independent residual CBAM -> concatenation -> VSSM.
-
-    Modality dropout and internal VSSM dropout regularise the high-capacity
-    fusion path of UATR-Triba while retaining spatial modelling.
-    """
-
     def __init__(
         self,
         num_classes: int,
@@ -247,6 +240,7 @@ class UATRTriba(nn.Module):
 ### create model ###
 UATR_Triba = UATRTriba
 
+### testing param ###
 def run_tests(device="cpu"):
     import io
     import unittest
@@ -277,7 +271,7 @@ def run_tests(device="cpu"):
                 logits = model.fusion_vmamba(features)
             self.assertEqual(tuple(logits.shape), (2, 4))
             self.assertTrue(torch.isfinite(logits).all().item())
-            print("model parameters：", sum(p.numel() for p in model.parameters()))
+            print("model parameters: ", sum(p.numel() for p in model.parameters()))
 
     result = unittest.TextTestRunner(verbosity=2).run(
         unittest.defaultTestLoader.loadTestsFromTestCase(ModelTests)
@@ -290,6 +284,6 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--device", default="cpu", help="测试设备，例如 cpu、cuda、cuda:0")
+    parser.add_argument("--device", default="cpu", help="cpu,cuda,cuda:0")
     args = parser.parse_args()
     run_tests(device=args.device)

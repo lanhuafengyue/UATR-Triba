@@ -1471,9 +1471,8 @@ class Backbone_VSSM(VSSM):
         return outs
 
 
-# ==================== VMamba 公共配置及模态编码器 ====================
-def _common_vmamba_kwargs() -> Dict[str, object]:
-    """VMamba block settings shared by modality encoders and fusion network."""
+def _common_mamba_kwargs() -> Dict[str, object]:
+
     return {
         "ssm_d_state": 1,
         "ssm_ratio": 2.0,
@@ -1519,13 +1518,12 @@ class MambaModalityEncoder(nn.Module):
             out_indices=(0,),
             pretrained=None,
             in_chans=in_channels,
-            # Backbone_VSSM 会删除分类头；先用 1 避免构建零维 Linear 的警告。
             num_classes=1,
             depths=[depth],
             dims=[feature_dim],
             patch_size=patch_size,
             drop_path_rate=drop_path_rate,
-            **_common_vmamba_kwargs(),
+            **_common_mamba_kwargs(),
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
