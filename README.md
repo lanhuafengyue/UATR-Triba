@@ -1,0 +1,9 @@
+
+### This repository of "UATR-TRIBA: LIGHTWEIGHT TRIPLE-DOMAIN STATE SPACE MODELS FOR UNDERWATER ACOUSTIC TARGET RECOGNITION"
+
+
+```python
+require python>=3.10 and pytorch>=2.1
+```
+
+
